@@ -1,0 +1,27 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+      "allowJs": true,
+      "skipLibCheck": true,
+      "strict": true,
+      "noEmit": true,
+      "esModuleInterop": true,
+      "module": "esnext",
+      "moduleResolution": "Node",
+      "resolveJsonModule": true,
+      "incremental": true,
+      "jsx": "react"
+  },
+  "include": [
+      "**/*.ts",
+      "**/*.js",
+      "**/*.tsx",
+      ".eslintrc.cjs",
+      "**/*.json",
+      "src/**/*",
+      "src/App/*"
+  ],
+  "exclude": [
+      "**/node_modules"
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "name": "obudle",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "main.tsx",
+  "scripts": {
+    "test": "jest",
+    "test:ci": "npm run test -- --ci --collectCoverage",
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint --color ./src",
+    "tsc:typecheck": "tsc --noEmit",
+    "precommit": "wireit"
+  },
+  "wireit": {
+    "precommit": {
+      "dependencies": [
+        "lint",
+        "tsc:typecheck"
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VasanthSM/mui-portfolio"
+  },
+  "author": "Vasanth",
+  "dependencies": {
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
+    "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/free-brands-svg-icons": "^6.6.0",
+    "@fortawesome/free-regular-svg-icons": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@google-pay/button-react": "^3.1.0",
+    "@mui/material": "^6.1.8",
+    "@mui/x-date-pickers": "^7.22.3",
+    "@react-three/drei": "^9.115.0",
+    "@react-three/fiber": "^8.17.10",
+    "@reduxjs/toolkit": "^2.3.0",
+    "@swc/jest": "^0.2.36",
+    "@testing-library/react": "^16.0.1",
+    "@types/jest": "^29.5.14",
+    "@types/lodash": "^4.17.12",
+    "@types/react-input-mask": "^3.0.5",
+    "axios": "^1.7.7",
+    "date-fns": "^2.30.0",
+    "dotenv": "^16.4.5",
+    "dotenv-flow": "^4.1.0",
+    "gsap": "^3.12.5",
+    "html-webpack-plugin": "^5.6.3",
+    "husky": "^9.1.6",
+    "jest-environment-jsdom": "^29.7.0",
+    "jest-gwt": "^3.1.2",
+    "jest-junit": "^16.0.0",
+    "jspdf": "^2.5.2",
+    "lodash": "^4.17.21",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.53.1",
+    "react-icons": "^5.3.0",
+    "react-qr-code": "^2.0.15",
+    "react-router-dom": "^6.27.0",
+    "ts-jest": "^29.2.5",
+    "ts-loader": "^9.5.1",
+    "tsconfig-paths-webpack-plugin": "^4.1.0",
+    "webpack": "^5.95.0",
+    "webpack-dev-server": "^5.1.0",
+    "webpack-merge": "^6.0.1",
+    "wireit": "^0.14.9"
+  },
+  "devDependencies": {
+    "@react-ddd/eslint-config": "^0.4.0",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14",
+    "typescript": "~5.6.2"
+  }
+}

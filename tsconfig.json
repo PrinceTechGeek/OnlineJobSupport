@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "typeRoots": ["./node_modules/@types"],
+    "types": ["webxr"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": false,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "incremental": true,
+    "jsx": "react",
+    "paths": {
+      "#api/*": [
+        "./src/api/*"
+      ],
+      "#domain/*": [
+        "./src/domain/*"
+      ],
+      "#pages/*": [
+        "./src/pages/*"
+      ],
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "**/node_modules"
+  ]
+}  
