@@ -80,7 +80,7 @@ const LoginPage = () => {
               order={{ md: isSignIn ? 1 : 2 }}
             >
               <Typography variant="h4" fontWeight="bold" sx={{ color: 'white' }} gutterBottom>
-                {isSignIn ? 'Welcome Back!' : 'Hello, Friend!'}
+                {isSignIn ? 'Welcome Back to SkillSync!' : 'Hello, Friend!'}
               </Typography>
               <Typography
                 variant="body1"
