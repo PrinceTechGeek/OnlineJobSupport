@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Grid, Typography } from '@mui/material';
 import CourseCard from './CourseCard';
@@ -164,13 +164,13 @@ const CourseList = () => {
     ? courses
     : courses.filter((course) => course.category === categories[selectedTab]);
 
-  const handleTabChange = (newValue: number) => {
+  const handleTabChange = useCallback((newValue: number) => {
     setSelectedTab(newValue);
-  };
+  }, []);
 
-  const handleCardClick = (id: number) => {
+  const handleCardClick = useCallback((id: number) => {
     navigate(`/courses/${id}`);
-  };
+  }, [navigate]);
 
   return (
     <div className="bg-gray-50 p-6 mt-16 max-w-7xl mx-auto">

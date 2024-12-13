@@ -6,8 +6,6 @@ import {
   Chip,
   Paper,
   Divider,
-  useMediaQuery,
-  useTheme,
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -21,9 +19,6 @@ import PlatformInsights from './PlatformInsights';
 
 const JobContent = () => {
   const [openDialog, setOpenDialog] = useState(false);
-
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const job = {
     title: 'Software Developer',
@@ -94,20 +89,20 @@ const JobContent = () => {
         marginTop: 10,
         backgroundColor: 'white',
         display: 'flex',
-        flexDirection: isMobile ? 'column' : 'row',
+        flexDirection: 'row',
         gap: 2,
       }}
     >
       <Box
         sx={{
-          width: isMobile ? '100%' : '35%',
-          marginBottom: isMobile ? 2 : 0,
+          width: '35%',
+          marginBottom: 2,
         }}
       >
         <PlatformInsights statistics={statistics} upcomingEvents={upcomingEvents} />
       </Box>
 
-      <Box sx={{ width: isMobile ? '100%' : '60%' }}>
+      <Box sx={{ width: '60%' }}>
         <Paper
           elevation={3}
           sx={{

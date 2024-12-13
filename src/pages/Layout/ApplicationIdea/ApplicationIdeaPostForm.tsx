@@ -1,27 +1,30 @@
 import React, { useState, useCallback } from 'react';
 import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   Button,
   TextField,
   Grid,
   Typography,
   Alert,
+  Paper,
+  Box,
+  Chip,
 } from '@mui/material';
-import type { ApplicationForm } from '#domain/Obudle/ApplicationForm';
+import { useNavigate } from 'react-router-dom';
+import type { ApplicationIdeaPostForm } from '#domain/Obudle/ApplicationIdeaPostForm';
 
-type ApplicationIdeaFormProps = {
-  open: boolean;
-  handleClose: () => void;
-};
+const ApplicationIdeaForm = () => {
+  const navigate = useNavigate();
 
-const ApplicationIdeaForm = ({ open, handleClose }: ApplicationIdeaFormProps) => {
-  const [ideaForm, setIdeaForm] = useState<ApplicationForm>({
+  const [ideaForm, setIdeaForm] = useState<ApplicationIdeaPostForm>({
     title: '',
     description: '',
-    category: '',
+    tags: [],
+    details: '',
+    features: '',
+    architectureType: '',
+    contactInfo: '',
+    companyProfile: '',
+    appType: '',
     image: null,
   });
 
@@ -39,39 +42,89 @@ const ApplicationIdeaForm = ({ open, handleClose }: ApplicationIdeaFormProps) =>
     [],
   );
 
+  const handleTagsChange = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const newTag = e.currentTarget.value.trim();
+        if (newTag && !ideaForm.tags.includes(newTag)) {
+          setIdeaForm((prevState) => ({
+            ...prevState,
+            tags: [...prevState.tags, newTag],
+          }));
+        }
+        e.currentTarget.value = '';
+      }
+    },
+    [ideaForm.tags],
+  );
+
+  const removeTag = useCallback(
+    (tag: string) => {
+      setIdeaForm((prevState) => ({
+        ...prevState,
+        tags: prevState.tags.filter((t) => t !== tag),
+      }));
+    },
+    [],
+  );
+
   const handleImageUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
-    if (file && !['pdf', 'ppt', 'doc'].includes(file.type)) {
-      setImageError('Please upload an architecture in PDF/PPT/WORD Document format only.');
+    if (file && ![
+      'application/pdf',
+      'application/vnd.ms-powerpoint',
+      'application/msword'].includes(file.type)) {
+      setImageError('Please upload an architecture in PDF, PPT, or WORD document format only.');
       setIdeaForm((prevState) => ({
         ...prevState,
         image: null,
+      }));
+    } else if (file) {
+      setImageError('');
+      setIdeaForm((prevState) => ({
+        ...prevState,
+        image: file,
       }));
     }
   }, []);
 
   const onSubmit = useCallback(() => {
-    if (!ideaForm.title || !ideaForm.description || !ideaForm.category) {
+    if (!ideaForm.title || !ideaForm.description
+      || !ideaForm.details || !ideaForm.architectureType) {
       setFormError('Please fill in all required fields.');
       return;
     }
 
     setFormError('');
-    handleClose();
-  }, [ideaForm, handleClose]);
+  }, [ideaForm]);
+
+  const handleCancel = useCallback(() => {
+    navigate('/');
+  }, [navigate]);
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-      <DialogTitle sx={{ fontWeight: 600, color: '#075985' }}>
-        Share Your Application Idea
-      </DialogTitle>
-
-      <DialogContent sx={{ padding: '20px' }}>
-        <Typography variant="body2" color="textSecondary" marginBottom={2}>
-          Please provide the details below to share your application idea.
+    <Box sx={{
+      maxWidth: '800px',
+      margin: 'auto',
+      padding: 4,
+      marginTop: 10,
+    }}
+    >
+      <Paper elevation={3} sx={{ padding: 4 }}>
+        <Typography
+          variant="h4"
+          sx={{
+            fontWeight: 600,
+            color: '#075985',
+            textAlign: 'center',
+            marginBottom: 3,
+          }}
+        >
+          Share Your Application Idea
         </Typography>
 
-        {formError && <Alert severity="error">{formError}</Alert>}
+        {formError && <Alert severity="error" sx={{ marginBottom: 2 }}>{formError}</Alert>}
 
         <Grid container spacing={3}>
           <Grid item xs={12}>
@@ -102,14 +155,93 @@ const ApplicationIdeaForm = ({ open, handleClose }: ApplicationIdeaFormProps) =>
 
           <Grid item xs={12}>
             <TextField
-              name="category"
-              label="Category (e.g., Web, Mobile, Game)"
+              name="details"
+              label="Details"
               variant="outlined"
               fullWidth
               required
-              value={ideaForm.category}
+              value={ideaForm.details}
               onChange={handleChange}
             />
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              name="features"
+              label="Features (comma-separated)"
+              variant="outlined"
+              fullWidth
+              value={ideaForm.features}
+              onChange={handleChange}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              name="architectureType"
+              label="Architecture Type"
+              variant="outlined"
+              fullWidth
+              required
+              value={ideaForm.architectureType}
+              onChange={handleChange}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              name="contactInfo"
+              label="Contact Information"
+              variant="outlined"
+              fullWidth
+              value={ideaForm.contactInfo}
+              onChange={handleChange}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              name="companyProfile"
+              label="Company Profile"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={3}
+              value={ideaForm.companyProfile}
+              onChange={handleChange}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              name="appType"
+              label="Application Type (e.g., Mobile, Web)"
+              variant="outlined"
+              fullWidth
+              value={ideaForm.appType}
+              onChange={handleChange}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              label="Tags"
+              variant="outlined"
+              fullWidth
+              placeholder="Add a tag and press Enter"
+              onKeyDown={handleTagsChange}
+            />
+            <Box sx={{
+              marginTop: 1,
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: 1,
+            }}
+            >
+              {ideaForm.tags.map((tag) => (
+                <Chip key={tag} label={tag} onDelete={() => removeTag(tag)} />
+              ))}
+            </Box>
           </Grid>
 
           <Grid item xs={12}>
@@ -143,27 +275,35 @@ const ApplicationIdeaForm = ({ open, handleClose }: ApplicationIdeaFormProps) =>
             )}
           </Grid>
         </Grid>
-      </DialogContent>
 
-      <DialogActions sx={{ paddingBottom: 3, paddingRight: 2 }}>
-        <Button onClick={handleClose} sx={{ color: '#075985', fontWeight: 'bold' }}>
-          Cancel
-        </Button>
-        <Button
-          onClick={onSubmit}
-          sx={{
-            backgroundColor: '#075985',
-            color: '#fff',
-            fontWeight: 'bold',
-            '&:hover': {
-              backgroundColor: '#063c52',
-            },
-          }}
-        >
-          Submit
-        </Button>
-      </DialogActions>
-    </Dialog>
+        <Box sx={{ marginTop: 4, textAlign: 'center' }}>
+          <Button
+            variant="outlined"
+            sx={{
+              color: '#075985',
+              fontWeight: 'bold',
+              marginRight: 2,
+            }}
+            onClick={handleCancel}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={onSubmit}
+            sx={{
+              backgroundColor: '#075985',
+              color: '#fff',
+              fontWeight: 'bold',
+              '&:hover': {
+                backgroundColor: '#063c52',
+              },
+            }}
+          >
+            Submit
+          </Button>
+        </Box>
+      </Paper>
+    </Box>
   );
 };
 

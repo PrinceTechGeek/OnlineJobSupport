@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Box, Grid } from '@mui/material';
 import {
   faShoppingCart,
@@ -12,6 +12,7 @@ import {
   faUsers,
   faGraduationCap,
 } from '@fortawesome/free-solid-svg-icons';
+import { filter, includes } from 'lodash/fp';
 import ApplicationCard from './ApplicationCard';
 import ApplicationIdeaFilterPanel from './ApplicationIdeaFilterPanel';
 import expense from '../../../assets/expenseTracker.png';
@@ -163,40 +164,52 @@ const ApplicationIdeaGrid = () => {
     accessLevel: [] as string[],
   });
 
-  const handleGlobalSearchChange = (value: string) => {
+  const handleGlobalSearchChange = useCallback((value: string) => {
     setGlobalSearch(value);
-  };
+  }, []);
 
-  const handleSearchTermChange = (filterKey: string, value: string) => {
-    setSearchTerms({
-      ...searchTerms,
-      [filterKey]: value,
-    });
-  };
-
-  const getFilteredOptions = (filterKey: keyof typeof selectedFilters, options: string[]) => {
-    const searchTerm = searchTerms[filterKey].toLowerCase();
-    const filteredOptions = options.filter((option) => option.toLowerCase().includes(searchTerm));
-    const selected = selectedFilters[filterKey];
-    const unselected = filteredOptions.filter((option) => !selected.includes(option));
-    return selected.concat(unselected);
-  };
-
-  const handleFilterChange = (filterKey: keyof typeof selectedFilters, value: string) => {
-    setSelectedFilters((prev) => {
-      const updated = prev[filterKey].includes(value)
-        ? prev[filterKey].filter((item) => item !== value)
-        : [...prev[filterKey], value];
-      return { ...prev, [filterKey]: updated };
-    });
-  };
-
-  const handleRemoveFilter = (filterKey: keyof typeof selectedFilters, value: string) => {
-    setSelectedFilters((prev) => ({
+  const handleSearchTermChange = useCallback((filterKey: string, value: string) => {
+    setSearchTerms((prev) => ({
       ...prev,
-      [filterKey]: prev[filterKey].filter((item) => item !== value),
+      [filterKey]: value,
     }));
-  };
+  }, []);
+
+  const getFilteredOptions = useMemo(
+    () => (filterKey: keyof typeof selectedFilters, options: string[]) => {
+      const searchTerm = searchTerms[filterKey]?.toLowerCase() || '';
+      const filteredOptions = filter(
+        (option) => option.toLowerCase().includes(searchTerm),
+        options,
+      );
+      const selected = selectedFilters[filterKey] || [];
+      const unselected = filteredOptions.filter((option) => !includes(option, selected));
+      return [...selected, ...unselected];
+    },
+    [searchTerms, selectedFilters],
+  );
+
+  const handleFilterChange = useCallback(
+    (filterKey: keyof typeof selectedFilters, value: string) => {
+      setSelectedFilters((prev) => {
+        const updated = prev[filterKey].includes(value)
+          ? prev[filterKey].filter((item) => item !== value)
+          : [...prev[filterKey], value];
+        return { ...prev, [filterKey]: updated };
+      });
+    },
+    [setSelectedFilters],
+  );
+
+  const handleRemoveFilter = useCallback(
+    (filterKey: keyof typeof selectedFilters, value: string) => {
+      setSelectedFilters((prev) => ({
+        ...prev,
+        [filterKey]: prev[filterKey].filter((item) => item !== value),
+      }));
+    },
+    [setSelectedFilters],
+  );
 
   const filteredIdeas = ideas.filter((idea) => {
     const matchesSearch = globalSearch.trim()

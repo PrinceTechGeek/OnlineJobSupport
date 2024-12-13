@@ -17,9 +17,15 @@ import expense from '../../../assets/expenseTracker.png';
 const ApplicationIdeaContent = () => {
   const applicationIdea = {
     title: 'Budget Tracker',
-    description: 'The Budget Tracker app helps individuals and businesses keep track of their income and expenses. It allows users to categorize their spending, set financial goals, and visualize their financial health through interactive reports and graphs. This app is perfect for anyone looking to gain more control over their finances and make smarter, data-driven decisions. Users can also set monthly budgets, track recurring payments, and generate detailed reports to monitor progress.',
+    description: `The Budget Tracker app helps individuals and businesses keep track of
+    their income and expenses. It allows users to categorize their spending, set financial
+    goals, and visualize their financial health through interactive reports and graphs.
+    This app is perfect for anyone looking to gain more control over their finances and make
+    smarter, data-driven decisions. Users can also set monthly budgets, track recurring
+    payments, and generate detailed reports to monitor progress.`,
     tags: ['Finance', 'React', 'Firebase', 'Budgeting'],
-    details: 'This app helps users categorize their expenses, track recurring payments, and visualize their spending patterns.',
+    details: `This app helps users categorize their expenses, track recurring payments,
+    and visualize their spending patterns.`,
     features: [
       'Expense categorization by type (Food, Bills, Entertainment, etc.)',
       'Monthly budgeting with notifications for overspending',
@@ -32,7 +38,9 @@ const ApplicationIdeaContent = () => {
     image: expense,
     designFile: '../../../assets/budget.png',
     contactInfo: 'For more info, contact us at support@techinnovators.com',
-    companyProfile: 'Tech Innovators is a leading software company focused on creating innovative tech solutions for businesses and individuals. We specialize in building secure, scalable applications with a focus on user experience.',
+    companyProfile: `Tech Innovators is a leading software company focused on creating
+    innovative tech solutions for businesses and individuals. We specialize in building
+    secure, scalable applications with a focus on user experience.`,
     appType: 'Mobile & Web',
   };
 
@@ -49,7 +57,10 @@ const ApplicationIdeaContent = () => {
     >
       <Grid container spacing={4} alignItems="flex-start">
         <Grid item xs={12} md={7}>
-          <Paper elevation={3} sx={{ padding: 3, borderRadius: '16px', backgroundColor: '#ffffff' }}>
+          <Paper
+            elevation={3}
+            sx={{ padding: 3, borderRadius: '16px', backgroundColor: '#ffffff' }}
+          >
             <Typography
               variant="h4"
               sx={{
@@ -65,7 +76,10 @@ const ApplicationIdeaContent = () => {
               />
               {applicationIdea.title}
             </Typography>
-            <Typography variant="body1" sx={{ fontWeight: '500', color: '#4A5568', marginBottom: 2 }}>
+            <Typography
+              variant="body1"
+              sx={{ fontWeight: '500', color: '#4A5568', marginBottom: 2 }}
+            >
               {applicationIdea.description}
             </Typography>
 

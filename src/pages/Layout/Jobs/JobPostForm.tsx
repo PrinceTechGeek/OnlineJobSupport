@@ -35,7 +35,7 @@ const JobPostForm = ({ open, handleClose }: JobPostFormProps) => {
 
   const errorMessage = useMemo(() => formError, [formError]);
 
-  const onSubmit = () => {
+  const onSubmit = useCallback(() => {
     if (!jobForm.jobTitle || !jobForm.companyName || !jobForm.location || !jobForm.jobDescription) {
       setFormError('Please fill in all required fields.');
       return;
@@ -43,7 +43,13 @@ const JobPostForm = ({ open, handleClose }: JobPostFormProps) => {
 
     setFormError('');
     handleClose();
-  };
+  }, [
+    handleClose,
+    jobForm.location,
+    jobForm.jobTitle,
+    jobForm.companyName,
+    jobForm.jobDescription,
+  ]);
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="md" sx={{ borderRadius: '10px' }} fullWidth>

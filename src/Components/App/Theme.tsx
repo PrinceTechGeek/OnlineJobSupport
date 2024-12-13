@@ -75,12 +75,12 @@ const theme = createTheme({
       secondary: '#666',
     },
     customColors: {
-      sky700: '#0469A1', // text-sky-700 equivalent
-      sky800: '#085985', // text-sky-800 equivalent
-      orange700: '#f57c00', // text-orange-700 equivalent
-      orange800: '#e65100', // text-orange-800 equivalent
-      black: '#000', // black color
-      white: '#fff', // white color
+      sky700: '#0469A1',
+      sky800: '#085985',
+      orange700: '#f57c00',
+      orange800: '#e65100',
+      black: '#000',
+      white: '#fff',
     },
   },
 });

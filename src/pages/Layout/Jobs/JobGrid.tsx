@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Grid, Box } from '@mui/material';
+import { filter, includes, lowerCase } from 'lodash/fp';
 import type { Job } from '#domain/Obudle/Jobs';
 import FilterPanel from './JobFilterPanel';
 import JobCard from './JobCard';
@@ -52,34 +53,46 @@ const JobGrid = () => {
     jobTypes: ['Full-time', 'Part-time', 'Freelance'],
   };
 
-  const handleFilterChange = (filterKey: keyof typeof selectedFilters, value: string) => {
-    setSelectedFilters((prev) => {
-      const updated = prev[filterKey].includes(value)
-        ? prev[filterKey].filter((item) => item !== value)
-        : [...prev[filterKey], value];
-      return { ...prev, [filterKey]: updated };
-    });
-  };
+  const handleFilterChange = useCallback(
+    (filterKey: keyof typeof selectedFilters, value: string) => {
+      setSelectedFilters((prev) => {
+        const updated = includes(value, prev[filterKey])
+          ? filter((item) => item !== value, prev[filterKey])
+          : [...prev[filterKey], value];
+        return { ...prev, [filterKey]: updated };
+      });
+    },
+    [],
+  );
 
-  const handleSearchChange = (filterKey: keyof typeof searchTerms, value: string) => {
-    setSearchTerms((prev) => ({ ...prev, [filterKey]: value }));
-  };
+  const handleSearchChange = useCallback(
+    (filterKey: keyof typeof searchTerms, value: string) => {
+      setSearchTerms((prev) => ({ ...prev, [filterKey]: value }));
+    },
+    [],
+  );
 
-  const removeFilter = (filterKey: keyof typeof selectedFilters, value: string) => {
-    setSelectedFilters((prev) => ({
-      ...prev,
-      [filterKey]: prev[filterKey].filter((item) => item !== value),
-    }));
-  };
+  const removeFilter = useCallback(
+    (filterKey: keyof typeof selectedFilters, value: string) => {
+      setSelectedFilters((prev) => ({
+        ...prev,
+        [filterKey]: filter((item) => item !== value, prev[filterKey]),
+      }));
+    },
+    [],
+  );
 
-  const getFilteredOptions = (filterKey: keyof typeof filters, options: string[]) => {
-    const searchTerm = searchTerms[filterKey].toLowerCase();
-    return options.filter((option) => option.toLowerCase().includes(searchTerm));
-  };
+  const getFilteredOptions = useMemo(
+    () => (filterKey: keyof typeof searchTerms, options: string[]) => {
+      const searchTerm = lowerCase(searchTerms[filterKey] || '');
+      return filter((option) => includes(searchTerm, lowerCase(option)), options);
+    },
+    [searchTerms],
+  );
 
-  const handleGlobalSearchChange = (value: string) => {
+  const handleGlobalSearchChange = useCallback((value: string) => {
     setGlobalSearch(value);
-  };
+  }, []);
 
   const filteredJobs = jobs.filter((job) => {
     const matchesSkills = !selectedFilters.skills.length

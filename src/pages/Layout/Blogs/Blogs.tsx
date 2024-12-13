@@ -8,6 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { map } from 'lodash/fp';
 import type { BlogsCategory } from '#domain/Obudle/BlogsCategory';
+import { useNavigate } from 'react-router-dom';
 
 const Blogs = () => {
   const categories: BlogsCategory[] = [
@@ -40,6 +41,8 @@ const Blogs = () => {
       benefit: 'Understand how technology is shaping the world on a global scale.',
     },
   ];
+
+  const navigate = useNavigate();
 
   return (
     <div className="bg-gray-50 py-12">
@@ -94,13 +97,14 @@ const Blogs = () => {
           >
             Explore Blog and Tech News
           </a>
-          <a
-            href="/create-blog"
+          <button
+            type="button"
+            onClick={() => navigate('/create-blog')}
             className="bg-gray-100 text-gray-800 px-8 py-4 rounded-full
             shadow-md hover:bg-gray-200 transition-all focus:ring-4"
           >
             Create a Blog
-          </a>
+          </button>
         </div>
       </div>
     </div>

@@ -9,7 +9,7 @@ import {
   Grid,
 } from '@mui/material';
 
-interface CourseServicesProps {
+type CourseServicesProps = {
   tabIndex: number;
   handleTabChange: (event: React.SyntheticEvent, newValue: number) => void;
   course: {
@@ -23,9 +23,9 @@ interface CourseServicesProps {
       description: string,
     },
   };
-}
+};
 
-const CourseServices: React.FC<CourseServicesProps> = ({ tabIndex, handleTabChange, course }) => {
+const CourseServices = ({ tabIndex, handleTabChange, course }: CourseServicesProps) => {
   const reasonsToLearn = [
     'Master the most in-demand DevOps tools and methodologies.',
     'Achieve a globally recognized certification.',

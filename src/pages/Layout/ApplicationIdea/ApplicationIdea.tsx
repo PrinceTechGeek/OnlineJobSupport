@@ -1,7 +1,7 @@
 import React from 'react';
 import ideaImg from '../../../assets/idea.jpg';
 
-const ApplicationIdeasPage = () => (
+const ApplicationIdea = () => (
   <div className="bg-gray-50 mt-16 py-12">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800">
@@ -66,14 +66,14 @@ const ApplicationIdeasPage = () => (
           space-y-4 sm:space-y-0 sm:space-x-6"
       >
         <a
-          href="/ApplicationIdeas"
+          href="/applicationIdeas"
           className="bg-sky-800 text-white px-10 py-4 rounded-full shadow-lg
             hover:bg-sky-900"
         >
           Explore the ideas
         </a>
         <a
-          href="/create-blog"
+          href="/applicationIdeas/shareIdeas"
           className="bg-gray-100 text-gray-800 px-8 py-4 rounded-full
             shadow-md hover:bg-gray-200 transition-all focus:ring-4"
         >
@@ -84,4 +84,4 @@ const ApplicationIdeasPage = () => (
   </div>
 );
 
-export default ApplicationIdeasPage;
+export default ApplicationIdea;

@@ -24,6 +24,7 @@ import Community from './Layout/Community/Community';
 import ApplicationIdeasPage from './Layout/ApplicationIdea/ApplicationIdea';
 import ApplicationIdeaGrid from './Layout/ApplicationIdea/ApplicationIdeaGrid';
 import ApplicationIdeaContent from './Layout/ApplicationIdea/ApplicationIdeaContent';
+import ApplicationIdeaForm from './Layout/ApplicationIdea/ApplicationIdeaPostForm';
 
 const AppRouter = () => (
   <Routes>
@@ -58,6 +59,7 @@ const AppRouter = () => (
     <Route path="community" element={<Community />} />
     <Route path="applicationIdeas" element={<ApplicationIdeaGrid />} />
     <Route path="applicationIdeas/:id" element={<ApplicationIdeaContent />} />
+    <Route path="applicationIdeas/shareIdeas" element={<ApplicationIdeaForm />} />
 
   </Routes>
 );
